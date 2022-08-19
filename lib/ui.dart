@@ -24,15 +24,15 @@ class _DetailsProductState extends State<DetailsProduct> {
       appBar: AppBar(
         title: Text("Single Details"),
       ),
-      body: FutureBuilder(
-        future: productServices().getSingleProducts(id),
-        builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            Image.network(snapshot.data['image']);
-          }
-          return Center(child: CircularProgressIndicator());
-        },
-      ),
+      // body: FutureBuilder(
+      //   future: productServices().getSingleProducts(id),
+      //   builder: (context, AsyncSnapshot snapshot) {
+      //     if (snapshot.hasData) {
+      //       Image.network(snapshot.data['image']);
+      //     }
+      //     return Center(child: CircularProgressIndicator());
+      //   },
+      // ),
     );
   }
 }
