@@ -24,24 +24,35 @@ class StoreHomePage extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Card(
                   elevation: 4,
-                  child: ListTile(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              DetailsProduct(id: snapshot.data[index]['id'])));
-                    },
-                    leading: ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Image.network(
-                          snapshot.data[index]['image'],
-                          fit: BoxFit.fitHeight,
-                          height: 100,
-                          width: 100,
-                        )),
-                    title: Text(
-                      snapshot.data[index]['title'],
-                      textAlign: TextAlign.center,
-                    ),
+                  child: Column(
+                    children: [
+                      ListTile(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => DetailsProduct(
+                                  id: snapshot.data[index]['id'])));
+                        },
+                        leading: ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: Image.network(
+                              snapshot.data[index]['image'],
+                              fit: BoxFit.fitHeight,
+                              height: 100,
+                              width: 100,
+                            )),
+                        title: Text(
+                          snapshot.data[index]['title'],
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      ElevatedButton(
+                        child: Text("Bye"),
+                        onPressed: () {},
+                      ),
+                      SizedBox(
+                        height: 10,
+                      )
+                    ],
                   ),
                 );
               },
