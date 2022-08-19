@@ -1,16 +1,12 @@
 import 'dart:convert';
 import 'dart:html';
+import 'package:api_practice/services.dart';
+import 'package:api_practice/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class StoreHomePage extends StatelessWidget {
   const StoreHomePage({Key? key}) : super(key: key);
-
-  Future getProducts() async {
-    final productUrl = Uri.parse("https://fakestoreapi.com/products");
-    final response = await http.get(productUrl);
-    return json.decode(response.body);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,19 +16,38 @@ class StoreHomePage extends StatelessWidget {
         centerTitle: true,
       ),
       body: FutureBuilder(
-        future: getProducts(),
+        future: productServices().getProducts(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
-                return SingleChildScrollView(
-                    child:
-                        ListTile(title: Text(snapshot.data[index]['title'])));
+                return Card(
+                  elevation: 4,
+                  child: ListTile(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>
+                              DetailsProduct(id: snapshot.data[index]['id'])));
+                    },
+                    leading: ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: Image.network(
+                          snapshot.data[index]['image'],
+                          fit: BoxFit.fitHeight,
+                          height: 100,
+                          width: 100,
+                        )),
+                    title: Text(
+                      snapshot.data[index]['title'],
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                );
               },
             );
           }
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator());
         },
       ),
     );
